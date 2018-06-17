@@ -9,6 +9,7 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JPanel;
 
@@ -20,13 +21,13 @@ public class DrawPlot extends JPanel {
 	 private static final Color GRAPH_COLOR = Color.green;
 	 private static final Color GRAPH_POINT_COLOR = new Color(150, 50, 50, 180);
 	 private static final Stroke GRAPH_STROKE = new BasicStroke(3f);
-	 private static final int PREF_W = 600;
-	   private static final int PREF_H = 450;
+	 private static final int PREF_W = 400;
+	   private static final int PREF_H = 250;
 	   private static final int scoreSize = 16;
 	   
-	 public List<Integer> scores ;
+	 public LinkedList<Integer> scores ;
 
-	 public DrawPlot(List<Integer> scores) {
+	 public DrawPlot(LinkedList<Integer> scores) {
 	      this.scores = scores;
 	   }
 
@@ -38,12 +39,12 @@ public class DrawPlot extends JPanel {
 	      Graphics2D g2 = (Graphics2D)g;
 	      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	 
-	      double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (scoreSize - 1);
+	      double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (scores.size() - 1);
 	      double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (MAX_SCORE - 1);
 	      
 	      List<Point> graphPoints = new ArrayList<Point>();
 	      
-	      for (int i = 0; i < scoreSize; i++) {
+	      for (int i = 0; i < scores.size(); i++) {
 	          int x1 = (int) (i * xScale + BORDER_GAP);
 	          int y1 = (int) (((MAX_SCORE - 1)-scores.get(i)) * yScale + BORDER_GAP);
 	          graphPoints.add(new Point(x1, y1));
@@ -62,8 +63,8 @@ public class DrawPlot extends JPanel {
 	             g2.drawLine(x_0, y_0, x_1, y_1);
 	          }
 	          // and for x axis
-	          for (int a = 0; a < scoreSize - 1; a++) {
-	             int X0 = (a + 1) * (getWidth() - BORDER_GAP * 2) / (scoreSize - 1) + BORDER_GAP;
+	          for (int a = 0; a < scores.size()-1; a++) {
+	             int X0 = (a + 1) * (getWidth() - BORDER_GAP * 2) / (scores.size()-1) + BORDER_GAP;
 	             int X1 = X0;
 	             int Y0 = getHeight() - BORDER_GAP;
 	             int Y1 = Y0 - GRAPH_POINT_WIDTH;
